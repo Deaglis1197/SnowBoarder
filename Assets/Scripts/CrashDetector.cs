@@ -5,9 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class CrashDetector : MonoBehaviour
 {
+
+    [SerializeField] float loadDelay=1f;
+    [SerializeField] ParticleSystem crashEffect; 
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.tag=="Ground"){
-            SceneManager.LoadScene(0);
+        if(other.tag=="Ground")
+        {
+            crashEffect.Play();
+            Invoke("ResetPosition",loadDelay);
         }
+    }
+
+    private void ResetPosition()
+    {
+        transform.rotation = Quaternion.identity;
+        transform.position = transform.GetComponent<PlayerController>().StartPoint.transform.position;
+        
     }
 }
