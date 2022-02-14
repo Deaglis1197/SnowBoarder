@@ -8,18 +8,25 @@ public class CrashDetector : MonoBehaviour
 
     [SerializeField] float loadDelay=1f;
     [SerializeField] ParticleSystem crashEffect; 
+    [SerializeField] AudioClip crashSFX;
+    bool hasCrashed=false;
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.tag=="Ground")
+        if(other.tag=="Ground" && !hasCrashed)
         {
+            hasCrashed=true;
+            FindObjectOfType<PlayerController>().DisableControls();
             crashEffect.Play();
+            GetComponent<AudioSource>().PlayOneShot(crashSFX);
             Invoke("ResetPosition",loadDelay);
         }
     }
 
     private void ResetPosition()
     {
+        
         transform.rotation = Quaternion.identity;
         transform.position = transform.GetComponent<PlayerController>().StartPoint.transform.position;
-        
+        FindObjectOfType<PlayerController>().EnableControls();
+        hasCrashed=false;
     }
 }

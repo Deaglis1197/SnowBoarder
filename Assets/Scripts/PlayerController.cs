@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float baseSpeed=20f;
     private Rigidbody2D rigidBody2D;
     SurfaceEffector2D surfaceEffector2D;
+    bool canMove=true;
     void Start()
     {
         transform.position=StartPoint.transform.position;
@@ -21,8 +22,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(canMove){
         RotatePlayer();
         RespondToBoost();
+        }
+        
     }
 
     private void RespondToBoost()
@@ -45,5 +49,11 @@ public class PlayerController : MonoBehaviour
         {
             rigidBody2D.AddTorque((-1) * torqueAmount);
         }
+    }
+    public void DisableControls(){
+        canMove=false;
+    }
+    public void EnableControls(){
+        canMove=true;
     }
 }
