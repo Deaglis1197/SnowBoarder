@@ -1,2 +1,2 @@
 # SnowBoarder
-2D Snow Board Game Unity
+2D Snow Board Game on Unity. 
